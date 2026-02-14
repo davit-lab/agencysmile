@@ -7,7 +7,8 @@ const AdminPage: React.FC = () => {
   const context = useContext(LanguageContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState({ user: '', pass: '' });
-  const [activeTab, setActiveTab] = useState<  'about' | 'services' | 'team' | 'pricing' | 'blog' | 'footer' | 'leads'>('overview');
+  // ტაბების ტიპებიდან ამოღებულია: overview, hero, media
+  const [activeTab, setActiveTab] = useState<'about' | 'team' | 'pricing' | 'blog' | 'footer' | 'leads'>('team');
   const [isSaving, setIsSaving] = useState(false);
   const [saveNote, setSaveNote] = useState<{ type: 'success' | 'error' | 'info', text: string } | null>(null);
 
@@ -98,7 +99,8 @@ const AdminPage: React.FC = () => {
           <img src="https://framerusercontent.com/images/0RLn6DL4qHZwAL47gzRU28dnWk.png" className="h-8 brightness-0 invert" alt="Logo" />
         </div>
         <nav className="flex-1 p-6 space-y-1 overflow-y-auto hide-scrollbar">
-          {['overview', 'hero', 'about', 'team', 'pricing', 'media', 'leads'].map(id => (
+          {/* ნავიგაციიდან ამოღებულია: overview, hero, media */}
+          {['about', 'team', 'pricing', 'leads'].map(id => (
             <button key={id} onClick={() => setActiveTab(id as any)} className={`w-full flex items-center gap-5 p-5 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all ${activeTab === id ? 'bg-[#005a5a] text-white' : 'text-white/30 hover:text-white'}`}>
               {id.toUpperCase()}
             </button>
@@ -121,10 +123,10 @@ const AdminPage: React.FC = () => {
 
           <h1 className="text-6xl font-black text-gray-900 uppercase tracking-tighter">{activeTab}</h1>
 
-          {activeTab === 'hero' && (
+          {activeTab === 'about' && (
             <div className="space-y-6">
-              <InputPair label="მთავარი სათაური (Welcome)" path="hero.welcome" />
-              <InputPair label="კლინიკის სახელი (Agency)" path="hero.agency" />
+              <InputPair label="About Section Title" path="aboutComp.title" />
+              <InputPair label="About Section Description" path="aboutComp.desc" isTextArea={true} />
             </div>
           )}
 
@@ -202,33 +204,6 @@ const AdminPage: React.FC = () => {
               }} className="w-full py-6 bg-black text-white rounded-[2rem] font-black uppercase text-xs tracking-widest hover:bg-[#005a5a] transition-all">
                 + ახალი კატეგორიის დამატება
               </button>
-            </div>
-          )}
-
-          {activeTab === 'media' && (
-            <div className="bg-white p-16 rounded-[4rem] shadow-sm space-y-12">
-               <h3 className="text-3xl font-black uppercase tracking-tighter">Media Assets Management</h3>
-               <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">აქ ჩაწერეთ ფოტოს ლინკი საიტის სხვადასხვა სექციისთვის</p>
-               {[
-                 { label: 'Hero Slide 1', path: 'hero_slide_1' },
-                 { label: 'Hero Slide 2', path: 'hero_slide_2' },
-                 { label: 'About Us Section (Home)', path: 'about_home' },
-                 { label: 'About Page Hero', path: 'about_page_hero' },
-                 { label: 'About Page Story', path: 'about_page_story' },
-                 { label: 'Contact Page Hero', path: 'contact_hero' },
-                 { label: 'Price Page Hero', path: 'price_hero' }
-               ].map(img => (
-                 <div key={img.path} className="space-y-3 pb-6 border-b border-gray-50 last:border-0">
-                   <div className="flex justify-between items-center">
-                     <p className="text-[10px] font-black uppercase text-gray-400 tracking-[0.3em]">{img.label}</p>
-                     <p className="text-[9px] font-mono text-teal-600 bg-teal-50 px-2 py-1 rounded">{img.path}</p>
-                   </div>
-                   <input className="w-full p-4 bg-gray-50 rounded-xl font-mono text-xs outline-none border border-transparent focus:border-teal-100" value={siteData.ka.media?.[img.path] || ''} onChange={e => {
-                     updateNested(`ka.media.${img.path}`, e.target.value);
-                     updateNested(`en.media.${img.path}`, e.target.value);
-                   }} placeholder="https://..." />
-                 </div>
-               ))}
             </div>
           )}
 
