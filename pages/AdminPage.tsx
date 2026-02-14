@@ -7,7 +7,7 @@ const AdminPage: React.FC = () => {
   const context = useContext(LanguageContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState({ user: '', pass: '' });
-  const [activeTab, setActiveTab] = useState<'overview' | 'hero' | 'about' | 'services' | 'team' | 'pricing' | 'blog' | 'footer' | 'media' | 'leads'>('overview');
+  const [activeTab, setActiveTab] = useState<  'about' | 'services' | 'team' | 'pricing' | 'blog' | 'footer' | 'leads'>('overview');
   const [isSaving, setIsSaving] = useState(false);
   const [saveNote, setSaveNote] = useState<{ type: 'success' | 'error' | 'info', text: string } | null>(null);
 
